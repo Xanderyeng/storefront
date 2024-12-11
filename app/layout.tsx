@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.className} relative flex flex-col min-h-screen `}
+        className={`${inter.className} relative flex flex-col min-h-[80dvh] `}
       >
         <ThemeProvider
           attribute='class'
