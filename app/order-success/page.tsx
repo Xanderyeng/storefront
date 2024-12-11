@@ -34,7 +34,7 @@ export default function OrderSuccessPage() {
           transition={{ delay: 0.2 }}
           className="text-4xl font-bold mb-4 text-gray-800"
         >
-          Order Placed Successfully!
+          Order Placed Successfully&#33;
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: -20 }}
@@ -42,7 +42,7 @@ export default function OrderSuccessPage() {
           transition={{ delay: 0.4 }}
           className="text-xl text-gray-600 mb-8"
         >
-          Thank you for your purchase. We're preparing your order with care!
+          Thank you for your purchase. We&#39;re preparing your order with care&#33;
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
