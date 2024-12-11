@@ -3,26 +3,31 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Category } from '@/types/types'
+
+// interface CategoryWithBlur extends Category {
+//   imageSrc: string;
+//   blurDataURL?: string;
+// }
 interface CategoryShowcaseSectionProps {
   categories: Category[]
 }
 
 export function CategoryShowcaseSection({ categories }: CategoryShowcaseSectionProps) {
-  const getCategoryImage = (categoryId: string) => {
-    switch (categoryId) {
-      case `men's clothing`:
-        return `/mens clothing.webp`;
-      case 'electronics':
-        return '/electronics.webp';
-      case `women's clothing`:
-        return `/womens clothing.webp`;
-      case 'jewelery':
-        return '/jewelery.webp';
-      default:
-        // Fallback image
-        return '/outdoors.webp';
-    }
-  };
+  // const getCategoryImage = (categoryId: string) => {
+  //   switch (categoryId) {
+  //     case `men's clothing`:
+  //       return `/mens clothing.webp`;
+  //     case 'electronics':
+  //       return '/electronics.webp';
+  //     case `women's clothing`:
+  //       return `/womens clothing.webp`;
+  //     case 'jewelery':
+  //       return '/jewelery.webp';
+  //     default:
+  //       // Fallback image
+  //       return '/outdoors.webp';
+  //   }
+  // };
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
@@ -39,10 +44,13 @@ export function CategoryShowcaseSection({ categories }: CategoryShowcaseSectionP
               <Link href={`/category/${encodeURIComponent(category.id)}`} className="block group h-full">
                 <div className="relative overflow-hidden rounded-lg shadow-lg h-full">
                   <Image
-                    src={getCategoryImage(category.id)}
+                    // src={getCategoryImage(category.id)}
+                    src={category.image || '/outdoors.webp'}
                     alt={category.name}
                     width={300}
                     height={300}
+                    placeholder={category.blurDataURL ? "blur" : "empty"}
+                    blurDataURL={category.blurDataURL}
                     className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-50" />

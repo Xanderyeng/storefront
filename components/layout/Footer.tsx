@@ -6,11 +6,11 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 export function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className=" relative z-50 border-t border-border/40 bg-background ">
-      <div className=" flex flex-col items-center justify-between gap-4 py-2 md:container md:h-24 md:flex-row md:py-0">
+    <footer className=" relative flex flex-col justify-center z-50 min-md:py-4 max-h-[15dvh] md:max-h-[8dvh] min-h-[6dvh] border-t border-border/40 bg-transparent ">
+      <div className=" flex flex-col items-center w-full mx-auto justify-between gap-4 py-2 md:container md:h-full md:flex-row md:py-0 ">
         {/* EXTERNAL LINKS + REPO */}
-      <div className="flex flex-col items-center gap-4 px-8 justify-end md:justify-center md:flex-row md:gap-2 md:px-0 ">
-        <nav className="flex flex-row justify-center align-center gap-4">
+      <div className="flex flex-col gap-4 px-8 justify-center md:flex-row md:gap-2 md:px-0 ">
+        <nav className="flex flex-row justify-center items-center gap-4">
             <motion.a
               href="https://github.com/xanderyeng/cinereel"
               target="_blank"
@@ -43,8 +43,8 @@ export function Footer() {
         </div>
 
         {/* My ByLine Tag */}
-        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <p className="text-center text-sm leading-loose md:text-left">
+        <div className="flex flex-col max-sm:w-full items-center gap-2 px-2 md:flex-row md:gap-2 md:px-0 ">
+          <p className="text-center space-x-4 text-sm leading-loose md:text-left">
             Built by{' '}
             <a
               href="https://chepkiyeng.netlify.app"
@@ -54,7 +54,9 @@ export function Footer() {
             >
               Alexander Chepkiyeng
             </a>
-            . Hosted on{' '}
+            .&nbsp;
+            <>
+            Hosted on{' '}
             <a
               href="https://vercel.com"
               target="_blank"
@@ -64,8 +66,9 @@ export function Footer() {
               Vercel
             </a>
             .
+            </>
           </p>
-          <p className="text-sm md:mb-0">
+          <p className="text-xs md:text-sm md:mb-0">
             © {currentYear}
           </p>
         </div>
