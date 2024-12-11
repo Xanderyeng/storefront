@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 export function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="border-t border-border/40 bg-background ">
+    <footer className=" relative z-50 border-t border-border/40 bg-background ">
       <div className=" flex flex-col items-center justify-between gap-4 py-2 md:container md:h-24 md:flex-row md:py-0">
         {/* EXTERNAL LINKS + REPO */}
       <div className="flex flex-col items-center gap-4 px-8 justify-end md:justify-center md:flex-row md:gap-2 md:px-0 ">
@@ -47,7 +47,7 @@ export function Footer() {
           <p className="text-center text-sm leading-loose md:text-left">
             Built by{' '}
             <a
-              href="https://github.com/xanderyeng"
+              href="https://chepkiyeng.netlify.app"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

@@ -46,41 +46,50 @@ interface CartStore {
  * to access and modify the cart state.
  */
 
+const calculateTotal = (items: CartItem[]) => 
+  items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
+  total: 0,
   addToCart: (product, quantity) => {
     set((state) => {
       const existingItem = state.items.find((item) => item.id === product.id)
-      if (existingItem) {
-        return {
-          items: state.items.map((item) =>
+      const newItems = existingItem
+        ? state.items.map((item) =>
             item.id === product.id
               ? { ...item, quantity: item.quantity + quantity }
               : item
-          ),
-        }
-      } else {
-        return { items: [...state.items, { ...product, quantity }] }
+          )
+        : [...state.items, { ...product, quantity }]
+      return { 
+        items: newItems,
+        total: calculateTotal(newItems)
       }
     })
   },
   removeFromCart: (productId) => {
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== productId),
-    }))
+    set((state) => {
+      const newItems = state.items.filter((item) => item.id !== productId)
+      return {
+        items: newItems,
+        total: calculateTotal(newItems)
+      }
+    })
   },
   updateQuantity: (productId, quantity) => {
-    set((state) => ({
-      items: state.items.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
-      ).filter((item) => item.quantity > 0),
-    }))
+    set((state) => {
+      const newItems = state.items
+        .map((item) => item.id === productId ? { ...item, quantity } : item)
+        .filter((item) => item.quantity > 0)
+      return {
+        items: newItems,
+        total: calculateTotal(newItems)
+      }
+    })
   },
   clearCart: () => {
-    set({ items: [] })
-  },
-  get total() {
-    return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    set({ items: [], total: 0 })
   },
 }))
 

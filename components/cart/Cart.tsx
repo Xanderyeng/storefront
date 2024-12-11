@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Button } from "@/components/ui/button"
 import Image from 'next/image'
 import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { CartItem } from '@/store/useCartStore'
 import { useCartStore } from '@/store/useCartStore'
 import { useCartUI } from './CartProvider'
@@ -22,9 +22,9 @@ interface CartProps {
 
 export function Cart() {
   const { isCartOpen, setIsCartOpen } = useCartUI()
-  const { items, removeFromCart, updateQuantity, clearCart } = useCartStore()
+  const { items, total, removeFromCart, updateQuantity, clearCart } = useCartStore()
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0)
-  const cartTotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  // const cartTotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
  
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -33,45 +33,53 @@ export function Cart() {
         <SheetTitle>Your Cart ({itemCount} items)</SheetTitle>
       </SheetHeader>
       <div className="mt-8 space-y-4">
-        {items.map((item) => (
-          <div key={item.id} className="flex items-center space-x-4">
-            <Image src={item.image} alt={item.title} width={50} height={50} className="rounded-md" />
-            <div className="flex-1">
-              <h3 className="text-sm font-medium">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span>{item.quantity}</span>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="destructive"
-                size="icon"
-                onClick={() => removeFromCart(item.id)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        ))}
+        <AnimatePresence>
+           {items.map((item) => (
+             <motion.div
+               key={item.id}
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -20 }}
+               className="flex items-center space-x-4"
+             >
+               <Image src={item.image} alt={item.title} width={50} height={50} className="rounded-md" />
+               <div className="flex-1">
+                 <h3 className="text-sm font-medium">{item.title}</h3>
+                 <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+               </div>
+               <div className="flex items-center space-x-2">
+                 <Button
+                   variant="outline"
+                   size="icon"
+                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                 >
+                   <Minus className="h-4 w-4" />
+                 </Button>
+                 <span>{item.quantity}</span>
+                 <Button
+                   variant="outline"
+                   size="icon"
+                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                 >
+                   <Plus className="h-4 w-4" />
+                 </Button>
+                 <Button
+                   variant="destructive"
+                   size="icon"
+                   onClick={() => removeFromCart(item.id)}
+                 >
+                   <Trash2 className="h-4 w-4" />
+                 </Button>
+               </div>
+             </motion.div>
+           ))}
+         </AnimatePresence>
       </div>
       {itemCount > 0 ? (
         <div className="mt-8">
           <div className="flex justify-between text-lg font-semibold">
             <span>Total:</span>
-            <span>${cartTotal.toFixed(2)}</span>
+            <span>${total.toFixed(2)}</span>
           </div>
           <Button className="w-full mt-4" onClick={clearCart}>Clear Cart</Button>
           <Link href="/checkout" onClick={() => setIsCartOpen(false)}>

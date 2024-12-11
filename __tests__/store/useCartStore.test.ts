@@ -60,7 +60,7 @@ describe('useCartStore', () => {
       result.current.addToCart(product2, 1)
     })
 
-    expect(result.current.total).toBe(0) // (10 * 2) + (20 * 1)
+    expect(result.current.total).toBe(40) // (10 * 2) + (20 * 1)
   })
 })
 

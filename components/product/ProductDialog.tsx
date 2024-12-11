@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Product } from '@/types/types'
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { useCartStore } from '@/store/useCartStore'
 import { useToast } from '@/hooks/use-toast'
 import { motion } from 'framer-motion'

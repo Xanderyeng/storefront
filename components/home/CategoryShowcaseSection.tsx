@@ -24,7 +24,7 @@ export function CategoryShowcaseSection({ categories }: CategoryShowcaseSectionP
     }
   };
   return (
-    <section className="py-12 bg-background">
+    <section className="py-12">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8">Shop by Category</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -36,7 +36,7 @@ export function CategoryShowcaseSection({ categories }: CategoryShowcaseSectionP
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={`/category/${category.id}`} className="block group h-full">
+              <Link href={`/category/${encodeURIComponent(category.id)}`} className="block group h-full">
                 <div className="relative overflow-hidden rounded-lg shadow-lg h-full">
                   <Image
                     src={getCategoryImage(category.id)}
