@@ -6,61 +6,53 @@
  * and products by category.
  */
 
-import { Product, Category, PaginatedResponse } from '@/types/types'
-import { createLocalBase64 } from '@/utils/createLocalBase64'
+import { Product, Category } from '@/types/types'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-async function fetchWithErrorHandling(url: string) {
-  const response = await fetch(url)
+export async function getProducts({ page = 1, limit = 10 }: { page?: number; limit?: number } = {}) {
+  const response = await fetch(`${API_URL}/products?limit=${limit}&skip=${(page - 1) * limit}`)
   if (!response.ok) {
-    throw new Error(`API call failed: ${response.statusText}`)
+    throw new Error('Failed to fetch products')
   }
-  return response.json()
-}
+  const products: Product[] = await response.json()
+  // Fake Store API doesn't provide total count, so I utilized a placeholder
+  const total = 100 
 
-export async function getProducts(): Promise<{ data: Product[] }> {
-  const products: Product[] = await fetchWithErrorHandling(`${API_URL}/products`)
-  const productsWithBlur = await Promise.all(products.map(async (product) => ({
-    ...product,
-    blurDataURL: await createLocalBase64(product.image)
-  })))
-  
-  return { data: productsWithBlur }
+  return { products, total }
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
-  try {
-    const product: Product = await fetchWithErrorHandling(`${API_URL}/products/${id}`)
-    const blurDataURL = await createLocalBase64(product.image)
-    return { ...product, blurDataURL }
-  } catch (error) {
-    console.error(`Failed to fetch product with id ${id}:`, error)
-    return null
-  }
+  const response = await fetch(`${API_URL}/products/${id}`)
+  if (!response.ok) return null
+  return response.json()
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const categories: string[] = await fetchWithErrorHandling(`${API_URL}/products/categories`)
-  return Promise.all(categories.map(async category => {
-    const image = `/${category.replace(/'/g, '').replace(/\s+/g, ' ').toLowerCase()}.webp`
-    const blurDataURL = await createLocalBase64(image)
-    console.log(`Category: ${category}, Image: ${image}, BlurDataURL: ${blurDataURL ? 'generated' : 'failed'}`);
-    return { id: category, name: category, image, blurDataURL }
-  }))
+  const response = await fetch(`${API_URL}/products/categories`)
+  if (!response.ok) {
+    throw new Error('Failed to fetch categories')
+  }
+  const categories: string[] = await response.json()
+  return categories.map(category => ({ id: category, name: category }))
 }
 
 export async function getProductsByCategory(
-  categoryId: string
-): Promise<{ data: Product[], categoryName: string }> {
-  const products: Product[] = await fetchWithErrorHandling(`${API_URL}/products/category/${categoryId}`)
-  const productsWithBlur = await Promise.all(products.map(async (product) => ({
-    ...product,
-    blurDataURL: await createLocalBase64(product.image)
-  })))
+  categoryId: string,
+  { page = 1, limit = 12 }: { page?: number; limit?: number } = {}
+): Promise<{ products: Product[], total: number, categoryName: string }> {
+  const response = await fetch(`${API_URL}/products/category/${categoryId}?limit=${limit}&skip=${(page - 1) * limit}`)
+  if (!response.ok) {
+    throw new Error('Failed to fetch products by category')
+  }
+  const products: Product[] = await response.json()
   
-  const categories: string[] = await fetchWithErrorHandling(`${API_URL}/products/categories`)
+  // Fetch category name
+  const categoryResponse = await fetch(`${API_URL}/products/categories`)
+  const categories: string[] = await categoryResponse.json()
   const categoryName = categories.find(cat => cat.toLowerCase() === categoryId.toLowerCase()) || 'Unknown Category'
-  
-  return { data: productsWithBlur, categoryName }
+  // Fake Store API doesn't provide total count, so I utilized a placeholder as in a previous function ( getProducts )
+  const total = 100 
+
+  return { products, total, categoryName }
 }
