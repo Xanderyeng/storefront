@@ -24,7 +24,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise(resolve => setTimeout(resolve, 600))
     console.log('Order submitted:', { ...formData, items, total })
     router.push('/order-success')
     clearCart()
