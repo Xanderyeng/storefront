@@ -6,6 +6,7 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 import { SpecialOffers } from "@/components/home/SpecialOffers";
 import { FeaturedCollections } from '@/components/home/FeaturedCollections'
 import { CategoryShowcaseSection } from "@/components/home/CategoryShowcaseSection";
+import Snow from "@/components/layout/Snow";
 
 export default async function Home() {
   const products = await getProducts();
@@ -20,6 +21,7 @@ export default async function Home() {
         <CategoryShowcaseSection categories={categories} />
         <SpecialOffers />
       <FeaturedCollections />
+      <Snow />
     </section>
     </CartProvider>   
   );
