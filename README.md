@@ -10,7 +10,7 @@
 
 ## Project Overview
 
-This document provides a technical overview of the DVT Tech Challenge e-commerce storefront implementation. It complements the main `README.md` file by focusing on the technical aspects, architecture, and development practices used in this project.
+This document provides a technical overview of the DVT Tech Challenge e-commerce storefront implementation. Took me 4 days from conception to this MVP. It complements the main `README.md` file by focusing on the technical aspects, architecture, and development practices used in this project.
 
 ## Features
 
