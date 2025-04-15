@@ -20,8 +20,14 @@ export default function OrderSuccessPage() {
   }, [])
 
   return (
-    <section className="min-h-screen max-w-[100vw] flex flex-col items-center overflow-hidden justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-      <Confetti width={windowSize.width} height={windowSize.height} />
+    <section className="min-h-screen max-w-screen relative flex flex-col items-center overflow-hidden justify-center ">
+      {/* Removed the background Gradient bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 */}
+      <Confetti
+      gravity={0.1}
+      width={windowSize.width}
+      height={windowSize.height}
+      style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} // Add these styles
+      />
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}

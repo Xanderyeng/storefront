@@ -46,12 +46,13 @@ export function ProductDialog({ product, onViewCart }: ProductDialogProps) {
       </DialogTrigger>
       <DialogContent className="w-[90vw] sm:max-w-[800px] rounded-lg p-0 overflow-hidden">
         <div className="flex flex-col md:flex-row">
-          <div className="relative w-full md:w-1/2 h-[300px] md:h-auto">
+          <div className="relative w-full md:w-1/2 h-[300px] md:h-auto bg-white">
             <Image
               src={image}
               alt={title}
               fill
               style={{ objectFit: 'contain' }}
+              className=' py-6 '
             />
           </div>
           <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
