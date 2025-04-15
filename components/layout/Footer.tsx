@@ -12,7 +12,7 @@ export function Footer() {
       <div className="flex flex-col gap-4 px-8 justify-center md:flex-row md:gap-2 md:px-0 ">
         <nav className="flex flex-row justify-center items-center gap-4">
             <motion.a
-              href="https://github.com/xanderyeng/cinereel"
+              href="https://github.com/xanderyeng/storefront"
               target="_blank"
               aria-label="View source code on GitHub"
               rel="noopener noreferrer"
@@ -47,7 +47,7 @@ export function Footer() {
           <p className="text-center space-x-4 text-sm leading-loose md:text-left">
             Built by{' '}
             <a
-              href="https://chepkiyeng.netlify.app"
+              href="https://alexander-chepkiyeng.vercel.app/"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
